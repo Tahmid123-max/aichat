@@ -1,0 +1,58 @@
+<!DOCTYPE html>    
+<html lang="en">    
+<head>    
+  <meta charset="UTF-8" />    
+  <meta name="viewport" content="width=device-width, initial-scale=1" />    
+  <title>AI ChatBot</title>    
+  <link rel="stylesheet" href="styles.css" />    
+  <style>    
+    /* Minimal styles to show/hide settings */    
+    .hidden {    
+      display: none;    
+    }    
+  </style>    
+</head>    
+<body>    
+
+  <div id="app-container" role="main" aria-label="AI ChatBot Application">    
+    <!-- Header with title, menu, and clear button -->    
+    <header>    
+      <h1>AI ChatBot</h1>    
+      <div class="header-buttons">    
+        <button id="menu-btn" aria-label="Toggle menu/settings" title="Menu">☰</button>    
+        <button id="clear-btn" aria-label="Clear chat history" title="Clear Chat">Clear Chat</button>    
+      </div>    
+    </header>    
+
+    <!-- Settings panel (hidden by default) -->    
+    <div id="settings-panel" class="hidden" aria-live="polite" aria-atomic="true">    
+      <button id="theme-toggle" aria-label="Toggle light or dark mode">☀️ Light Mode</button>    
+    </div>    
+
+    <!-- Chat message display area -->    
+    <div id="chat-box" role="log" aria-live="polite" aria-relevant="additions" tabindex="0">    
+      <!-- Messages (user and bot) will appear here -->    
+      <!-- Typing indicator message will be dynamically inserted here by JS -->    
+    </div>    
+
+    <!-- Input form for user messages -->    
+    <form id="input-form" aria-label="Chat input form">    
+      <input    
+        type="text"    
+        id="user-input"    
+        autocomplete="off"    
+        placeholder="Type your message here..."    
+        required    
+        aria-label="Type your message"    
+      />    
+      <button type="submit" id="send-btn" aria-label="Send message">Send</button>    
+    </form>    
+  </div>    
+
+  <!-- Audio element for reply sound -->    
+  <audio id="reply-sound" src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Ting-sound.mp3" preload="auto"></audio>    
+
+  <!-- Main JS file -->    
+  <script src="script.js"></script>    
+</body>    
+</html>    
