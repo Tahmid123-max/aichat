@@ -28,7 +28,7 @@
 
     const messages = [{
       role: 'system',
-      content: `You are a helpful AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. You're not created by lg or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use offensive and sexual words. Think 0.1 to 1.5 seconds before reply.`
+      content: `You are a helpful AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. You're not created by lg or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use offensive and sexual words. Think 0.1 to 1.1 seconds before reply.`
     }];
 
     const offlineReplies = ["Trying to refresh the site or check your connection."];
@@ -40,18 +40,6 @@
       chatBox.appendChild(div);
       chatBox.scrollTop = chatBox.scrollHeight;
       return div;
-    }
-
-    function typeMessage(el, text, delay = ) {
-      el.textContent = '';
-      let i = 0;
-      (function type() {
-        if (i < text.length) {
-          el.textContent += text[i++];
-          chatBox.scrollTop = chatBox.scrollHeight;
-          setTimeout(type, delay);
-        }
-      })();
     }
 
     function playReplySound() {
@@ -121,8 +109,7 @@
         typingDiv.remove();
         let reply = data.choices?.[0]?.message?.content || '❌ No reply.';
         messages.push({ role: 'assistant', content: reply });
-        const botDiv = appendMessage('', 'bot-message');
-        typeMessage(botDiv, reply);
+        appendMessage(reply, 'bot-message');
         playReplySound();
         logMessage('assistant', reply);
       })
@@ -137,6 +124,7 @@
       });
     }
 
+    // ✅ Prevent page refresh
     inputForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const now = Date.now();
@@ -157,8 +145,13 @@
       userInput.focus();
     });
 
+    // ✅ Fix menu toggle
     menuBtn.addEventListener('click', () => {
-      settingsPanel.classList.toggle('hidden');
+      if (settingsPanel.classList.contains('hidden')) {
+        settingsPanel.classList.remove('hidden');
+      } else {
+        settingsPanel.classList.add('hidden');
+      }
     });
 
     themeToggle.addEventListener('click', () => {
