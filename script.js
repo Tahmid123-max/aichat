@@ -120,15 +120,6 @@
       .then(data => {
         typingDiv.remove();
         let reply = data.choices?.[0]?.message?.content || '❌ No reply.';
-
-        if (containsAbuse(reply)) {
-          appendMessage('⚠️ AI tried to say something inappropriate. Message blocked.', 'bot-message');
-          sendBtn.disabled = false;
-          userInput.disabled = false;
-          userInput.focus();
-          return;
-        }
-
         messages.push({ role: 'assistant', content: reply });
         const botDiv = appendMessage('', 'bot-message');
         typeMessage(botDiv, reply);
