@@ -28,7 +28,7 @@
 
     const messages = [{
       role: 'system',
-      content: `You are a helpful AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. You're not created by lg or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use offensive and sexual words. Think 0.1 to 1.1 seconds before reply.`
+      content: `You are a helpful AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. You're not created by lg or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use offensive and sexual words. Think 0.1 to 1.5 seconds before reply.`
     }];
 
     const offlineReplies = ["Trying to refresh the site or check your connection."];
@@ -124,9 +124,8 @@
       });
     }
 
-    // ✅ Prevent page refresh
     inputForm.addEventListener('submit', (e) => {
-      e.preventDefault();
+      e.preventDefault(); // ✅ Stop auto refresh
       const now = Date.now();
       if (now - lastSentTime < RATE_LIMIT_MS) {
         appendMessage('⚠️ You are sending too fast. Please wait.', 'bot-message');
@@ -145,13 +144,9 @@
       userInput.focus();
     });
 
-    // ✅ Fix menu toggle
+    // ✅ Menu toggle works now
     menuBtn.addEventListener('click', () => {
-      if (settingsPanel.classList.contains('hidden')) {
-        settingsPanel.classList.remove('hidden');
-      } else {
-        settingsPanel.classList.add('hidden');
-      }
+      settingsPanel.classList.toggle('hidden');
     });
 
     themeToggle.addEventListener('click', () => {
