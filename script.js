@@ -27,7 +27,7 @@
     "Check your connection or try again."
   ];
 
-  // Append message
+  // Append message to chat
   const appendMessage = (text, className) => {
     const div = document.createElement('div');
     div.className = className;
@@ -37,7 +37,7 @@
     return div;
   };
 
-  // Typing animation
+  // Typing effect
   const typeMessage = (el, text, delay = 0) => {
     el.textContent = '';
     let i = 0;
@@ -69,7 +69,7 @@
     }
   };
 
-  // Send user message
+  // Send message
   const sendMessage = (text) => {
     if (!text.trim()) return;
 
@@ -136,7 +136,7 @@
     xhr.send(body);
   };
 
-  // UI Event Listeners
+  // Event listeners
   document.addEventListener('DOMContentLoaded', () => {
     // Send on button click
     sendBtn.addEventListener('click', () => {
@@ -147,23 +147,17 @@
       }
     });
 
-    // Send on Enter
-    userInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        sendBtn.click();
-      }
-    });
+    // ❌ No Enter key sending — Enter will just add a new line
 
     // Clear button
     clearBtn.addEventListener('click', () => {
       chatBox.innerHTML = '';
-      messages.splice(1); // keep system prompt
+      messages.splice(1);
       userInput.value = '';
       userInput.focus();
     });
 
-    // Toggle settings panel
+    // Settings panel toggle
     menuBtn.addEventListener('click', () => {
       settingsPanel.classList.toggle('hidden');
     });
