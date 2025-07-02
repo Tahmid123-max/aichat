@@ -1,6 +1,5 @@
-(() => { document.addEventListener('DOMContentLoaded', () => { // Element selectors const chatBox = document.getElementById('chat-box'); const userInput = document.getElementById('user-input'); const sendBtn = document.getElementById('send-btn'); const clearBtn = document.getElementById('clear-btn'); const menuBtn = document.getElementById('menu-btn'); const settingsPanel = document.getElementById('settings-panel'); const themeToggle = document.getElementById('theme-toggle'); const blueGlowToggle = document.getElementById('blue-glow-toggle');
+(() => { document.addEventListener('DOMContentLoaded', () => { const chatBox = document.getElementById('chat-box'); const userInput = document.getElementById('user-input'); const sendBtn = document.getElementById('send-btn'); const clearBtn = document.getElementById('clear-btn'); const menuBtn = document.getElementById('menu-btn'); const settingsPanel = document.getElementById('settings-panel'); const themeToggle = document.getElementById('theme-toggle'); const blueGlowToggle = document.getElementById('blue-glow-toggle');
 
-// Add upload image button dynamically
 const uploadBtn = document.createElement('input');
 uploadBtn.type = 'file';
 uploadBtn.accept = 'image/*';
@@ -8,13 +7,11 @@ uploadBtn.id = 'upload-image-btn';
 uploadBtn.style.margin = '10px';
 settingsPanel.appendChild(uploadBtn);
 
-// Add image preview container
 const imagePreview = document.createElement('div');
 imagePreview.id = 'image-preview';
 imagePreview.style.margin = '10px 0';
 settingsPanel.appendChild(imagePreview);
 
-// API Config
 const API_KEY = 'tgp_v1_8V75-FUeZupXDZJtUOewnH_odg2gmCHHNl7yoaGFxfM';
 const API_URL = 'https://api.together.xyz/v1/chat/completions';
 const VISION_URL = 'https://api.together.xyz/v1/vision/completions';
@@ -27,9 +24,11 @@ const RATE_LIMIT_MS = 1000;
 const abusiveWords = ['sex', 'porn', 'sexy', 'sexual', 'nude', 'pussy', 'bichi', 'nunu', 'boob', 'fuck', 'fucking', 'fack', 'dick', 'blowjob', 'madarchod', 'khanki', 'magi', 'kuttarbacca'];
 const containsAbuse = text => abusiveWords.some(w => text.toLowerCase().includes(w));
 
+const memory = [];
+
 const messages = [{
   role: 'system',
-  content: `You are a helpful AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. `
+  content: `You are a helpful AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat.`
 }];
 
 const offlineReplies = ["Trying to refresh the site or check your connection."];
@@ -74,6 +73,10 @@ function logMessage(type, content) {
   console.log(`[${type.toUpperCase()}] ${content}`);
 }
 
+function learnFromUserInput(text) {
+  if (!containsAbuse(text)) memory.push(text);
+}
+
 function sendMessage(text) {
   if (!text.trim()) return;
   if (containsAbuse(text)) {
@@ -83,6 +86,7 @@ function sendMessage(text) {
 
   appendMessage(text, 'user-message');
   messages.push({ role: 'user', content: text });
+  learnFromUserInput(text);
   logMessage('user', text);
 
   sendBtn.disabled = true;
@@ -139,7 +143,6 @@ function sendImage(file) {
   reader.onload = () => {
     const base64 = reader.result.split(',')[1];
 
-    // Show image preview
     const img = new Image();
     img.src = reader.result;
     img.alt = 'Uploaded Image';
@@ -224,4 +227,4 @@ userInput.focus();
 
 }); })();
 
-    
+                                                              
