@@ -42,7 +42,7 @@
       return div;
     }
 
-    function typeMessage(el, text, delay = 0.1) {
+    function typeMessage(el, text, delay = ) {
       el.textContent = '';
       let i = 0;
       (function type() {
