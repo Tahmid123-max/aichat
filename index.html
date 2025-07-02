@@ -6,16 +6,12 @@
   <title>AI ChatBot</title>    
   <link rel="stylesheet" href="styles.css" />    
   <style>    
-    /* Minimal styles to show/hide settings */    
-    .hidden {    
-      display: none;    
-    }    
+    .hidden { display: none; }    
   </style>    
 </head>    
 <body>    
 
   <div id="app-container" role="main" aria-label="AI ChatBot Application">    
-    <!-- Header with title, menu, and clear button -->    
     <header>    
       <h1>AI ChatBot</h1>    
       <div class="header-buttons">    
@@ -24,18 +20,16 @@
       </div>    
     </header>    
 
-    <!-- Settings panel (hidden by default) -->    
     <div id="settings-panel" class="hidden" aria-live="polite" aria-atomic="true">    
       <button id="theme-toggle" aria-label="Toggle light or dark mode">☀️ Light Mode</button>    
+      <br><br>
+      <button id="blue-glow-toggle" aria-label="Toggle blue glowing theme" title="Toggle Blue Glow Theme">💡 Blue Glow</button>    
     </div>    
 
-    <!-- Chat message display area -->    
     <div id="chat-box" role="log" aria-live="polite" aria-relevant="additions" tabindex="0">    
-      <!-- Messages (user and bot) will appear here -->    
-      <!-- Typing indicator message will be dynamically inserted here by JS -->    
+      <!-- Messages will appear here -->    
     </div>    
 
-    <!-- Input form for user messages -->    
     <form id="input-form" aria-label="Chat input form">    
       <textarea    
         id="user-input"    
@@ -49,20 +43,39 @@
     </form>    
   </div>    
 
-  <!-- Audio element for reply sound -->    
   <audio id="reply-sound" src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Ting-sound.mp3" preload="auto"></audio>    
 
-  <!-- Main JS file -->    
   <script src="script.js"></script>    
 
   <script>
-    // Optional: auto-grow textarea as user types
+    // Auto-grow textarea
     const textarea = document.getElementById('user-input');
     textarea.addEventListener('input', function () {
       this.style.height = 'auto';
       this.style.height = this.scrollHeight + 'px';
     });
-  </script>
+
+    // Toggle settings panel
+    const menuBtn = document.getElementById('menu-btn');
+    const settingsPanel = document.getElementById('settings-panel');
+    menuBtn.addEventListener('click', () => {
+      settingsPanel.classList.toggle('hidden');
+    });
+
+    // Theme toggle (light/dark)
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      themeToggle.textContent = document.body.classList.contains('light-mode') ? '🌙 Dark Mode' : '☀️ Light Mode';
+    });
+
+    // Blue glow toggle
+    const blueGlowToggle = document.getElementById('blue-glow-toggle');
+    blueGlowToggle.addEventListener('click', () => {
+      document.body.classList.toggle('blue-glow');
+      blueGlowToggle.textContent = document.body.classList.contains('blue-glow') ? '🔧 Default Theme' : '💡 Blue Glow';
+    });
+  </script>    
 
 </body>    
 </html>
