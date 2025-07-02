@@ -17,7 +17,7 @@
     let lastSentTime = 0;
     const RATE_LIMIT_MS = 800;
 
-    const abusiveWords = ['sex', 'porn', 'sexy', 'sexual', 'nude', 'pussy', 'bichi', 'nunu', 'boob', 'fuck', 'fucking', 'fack', 'dick', 'blowjob', 'madarchod', 'khanki', 'magi', 'kuttarbacca', 'madartek', 'handle', 'bokacoda', 'lund', 'ass', '69', 'boobs', 'hotgirl', 'sexygirl', 'chudiya', 'chud', 'sax'];
+    const abusiveWords = ['sex', 'porn', 'sexy', 'sexual', 'nude', 'pussy', 'bichi', 'nunu', 'boob', 'fuck', 'fucking', 'fack', 'dick', 'blowjob', 'madarchod', 'khanki', 'magi', 'madartek', 'handle', 'bokacoda', 'lund', 'ass', '69', 'boobs', 'hotgirl', 'sexygirl', 'chudiya', 'chud'];
     const containsAbuse = text => abusiveWords.some(w => text.toLowerCase().includes(w));
 
     const memory = [];
