@@ -28,8 +28,8 @@ inputForm.parentNode.insertBefore(uploadContainer, inputForm);
 const API_KEY = 'tgp_v1_8V75-FUeZupXDZJtUOewnH_odg2gmCHHNl7yoaGFxfM';
 const API_URL = 'https://api.together.xyz/v1/chat/completions';
 const VISION_URL = 'https://api.together.xyz/v1/vision/completions';
-const TEXT_MODEL = 'meta-llama/Llama-3.3-70B-Instruct-Turbo-Free';
-const VISION_MODEL = 'meta-llama/Meta-Vision-Image-Analyser';
+const TEXT_MODEL = 'lgai/exaone-3-5-32b-instruct';
+const VISION_MODEL = 'meta-llama/Llama-Vision-Free';
 
 let lastSentTime = 0;
 const RATE_LIMIT_MS = 1000;
