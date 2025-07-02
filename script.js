@@ -38,7 +38,7 @@
       return div;
     }
 
-    function typeMessage(el, text, delay = 20) {
+    function typeMessage(el, text, delay = 0) {
       el.textContent = '';
       let i = 0;
       (function type() {
