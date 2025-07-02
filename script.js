@@ -129,8 +129,8 @@
     const body = JSON.stringify({
       model: MODEL,
       messages,
-      temperature: 0.2,
-      max_tokens: 550
+      temperature: 0.3,
+      max_tokens: 500
     });
 
     xhr.send(body);
