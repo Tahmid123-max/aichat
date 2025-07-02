@@ -1,18 +1,29 @@
 (() => { document.addEventListener('DOMContentLoaded', () => { const chatBox = document.getElementById('chat-box'); const userInput = document.getElementById('user-input'); const sendBtn = document.getElementById('send-btn'); const clearBtn = document.getElementById('clear-btn'); const menuBtn = document.getElementById('menu-btn'); const settingsPanel = document.getElementById('settings-panel'); const themeToggle = document.getElementById('theme-toggle'); const blueGlowToggle = document.getElementById('blue-glow-toggle');
 
-// Move image upload input to just before send button
 const inputForm = document.getElementById('input-form');
+
+// Add upload image button and preview container ABOVE send button
+const uploadContainer = document.createElement('div');
+uploadContainer.style.margin = '10px 0';
+
+const uploadLabel = document.createElement('label');
+uploadLabel.textContent = '📁 Choose Image:';
+uploadLabel.htmlFor = 'upload-image-btn';
+
 const uploadBtn = document.createElement('input');
 uploadBtn.type = 'file';
 uploadBtn.accept = 'image/*';
 uploadBtn.id = 'upload-image-btn';
-uploadBtn.style.margin = '10px 0';
-inputForm.insertBefore(uploadBtn, userInput);
+uploadBtn.style.marginLeft = '10px';
 
 const imagePreview = document.createElement('div');
 imagePreview.id = 'image-preview';
-imagePreview.style.margin = '10px 0';
-inputForm.insertBefore(imagePreview, userInput);
+imagePreview.style.marginTop = '10px';
+
+uploadContainer.appendChild(uploadLabel);
+uploadContainer.appendChild(uploadBtn);
+uploadContainer.appendChild(imagePreview);
+inputForm.parentNode.insertBefore(uploadContainer, inputForm);
 
 const API_KEY = 'tgp_v1_8V75-FUeZupXDZJtUOewnH_odg2gmCHHNl7yoaGFxfM';
 const API_URL = 'https://api.together.xyz/v1/chat/completions';
@@ -186,7 +197,7 @@ function sendImage(file) {
   reader.readAsDataURL(file);
 }
 
-sendBtn.addEventListener('click', (e) => {
+inputForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const now = Date.now();
   if (now - lastSentTime < RATE_LIMIT_MS) {
@@ -206,7 +217,9 @@ clearBtn.addEventListener('click', () => {
   userInput.focus();
 });
 
-menuBtn.addEventListener('click', () => settingsPanel.classList.toggle('hidden'));
+menuBtn.addEventListener('click', () => {
+  settingsPanel.classList.toggle('hidden');
+});
 
 themeToggle.addEventListener('click', () => {
   const light = document.body.classList.toggle('light-mode');
@@ -229,4 +242,4 @@ userInput.focus();
 
 }); })();
 
-        
+  
