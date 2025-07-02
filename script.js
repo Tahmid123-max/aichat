@@ -17,14 +17,18 @@
     let lastSentTime = 0;
     const RATE_LIMIT_MS = 800;
 
-    const abusiveWords = ['sex', 'porn', 'sexy', 'sexual', 'nude', 'pussy', 'bichi', 'nunu', 'boob', 'fuck', 'fucking', 'fack', 'dick', 'blowjob', 'madarchod', 'khanki', 'magi', 'madartek', 'handle', 'bokacoda', 'lund', 'ass', '69', 'boobs', 'hotgirl', 'sexygirl', 'chudiya', 'chud'];
+    const abusiveWords = [
+      'sex','porn','sexy','sexual','nude','pussy','bichi','nunu','boob','fuck','fucking',
+      'fack','dick','blowjob','madarchod','khanki','magi','madartek','handle','bokacoda',
+      'lund','ass','69','boobs','hotgirl','sexygirl','chudiya','chud'
+    ];
     const containsAbuse = text => abusiveWords.some(w => text.toLowerCase().includes(w));
 
     const memory = [];
 
     const messages = [{
       role: 'system',
-      content: `You are a helpful AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. You're not created by lg or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You dont have permission to use offensive and sexual words. Think 0.1 to 1 seconds before reply. `
+      content: `You are a helpful AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. You're not created by lg or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use offensive and sexual words. Think 0.1 to 1 seconds before reply.`
     }];
 
     const offlineReplies = ["Trying to refresh the site or check your connection."];
@@ -105,13 +109,26 @@
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + API_KEY
         },
-        body: JSON.stringify({ model: TEXT_MODEL, messages, temperature: 0.3, max_tokens: 500 })
+        body: JSON.stringify({
+          model: TEXT_MODEL,
+          messages,
+          temperature: 0.3,
+          max_tokens: 500
+        })
       })
       .then(res => res.json())
       .then(data => {
         typingDiv.remove();
         let reply = data.choices?.[0]?.message?.content || '❌ No reply.';
-        if (containsAbuse(reply)) reply = '⚠️ Filtered inappropriate content.';
+
+        if (containsAbuse(reply)) {
+          appendMessage('⚠️ AI tried to say something inappropriate. Message blocked.', 'bot-message');
+          sendBtn.disabled = false;
+          userInput.disabled = false;
+          userInput.focus();
+          return;
+        }
+
         messages.push({ role: 'assistant', content: reply });
         const botDiv = appendMessage('', 'bot-message');
         typeMessage(botDiv, reply);
