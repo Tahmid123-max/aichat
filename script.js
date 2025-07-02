@@ -1,16 +1,18 @@
 (() => { document.addEventListener('DOMContentLoaded', () => { const chatBox = document.getElementById('chat-box'); const userInput = document.getElementById('user-input'); const sendBtn = document.getElementById('send-btn'); const clearBtn = document.getElementById('clear-btn'); const menuBtn = document.getElementById('menu-btn'); const settingsPanel = document.getElementById('settings-panel'); const themeToggle = document.getElementById('theme-toggle'); const blueGlowToggle = document.getElementById('blue-glow-toggle');
 
+// Move image upload input to just before send button
+const inputForm = document.getElementById('input-form');
 const uploadBtn = document.createElement('input');
 uploadBtn.type = 'file';
 uploadBtn.accept = 'image/*';
 uploadBtn.id = 'upload-image-btn';
-uploadBtn.style.margin = '10px';
-settingsPanel.appendChild(uploadBtn);
+uploadBtn.style.margin = '10px 0';
+inputForm.insertBefore(uploadBtn, userInput);
 
 const imagePreview = document.createElement('div');
 imagePreview.id = 'image-preview';
 imagePreview.style.margin = '10px 0';
-settingsPanel.appendChild(imagePreview);
+inputForm.insertBefore(imagePreview, userInput);
 
 const API_KEY = 'tgp_v1_8V75-FUeZupXDZJtUOewnH_odg2gmCHHNl7yoaGFxfM';
 const API_URL = 'https://api.together.xyz/v1/chat/completions';
@@ -227,4 +229,4 @@ userInput.focus();
 
 }); })();
 
-                                                              
+        
