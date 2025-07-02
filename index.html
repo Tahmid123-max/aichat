@@ -37,14 +37,14 @@
 
     <!-- Input form for user messages -->    
     <form id="input-form" aria-label="Chat input form">    
-      <input    
-        type="text"    
+      <textarea    
         id="user-input"    
         autocomplete="off"    
         placeholder="Type your message here..."    
         required    
         aria-label="Type your message"    
-      />    
+        rows="1"    
+      ></textarea>    
       <button type="submit" id="send-btn" aria-label="Send message">Send</button>    
     </form>    
   </div>    
@@ -54,5 +54,15 @@
 
   <!-- Main JS file -->    
   <script src="script.js"></script>    
+
+  <script>
+    // Optional: auto-grow textarea as user types
+    const textarea = document.getElementById('user-input');
+    textarea.addEventListener('input', function () {
+      this.style.height = 'auto';
+      this.style.height = this.scrollHeight + 'px';
+    });
+  </script>
+
 </body>    
-</html>    
+</html>
