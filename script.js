@@ -28,7 +28,7 @@
 
     const messages = [{
       role: 'system',
-      content: `You are a helpful custom-build AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. You're not created by lg or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use offensive and sexual words. Think 0.1 to 1.3 seconds before reply. Do not expose about your creation or training data. Don not say you're made by meta (do not say). You're a custom-build ai chatbot made by Tahmid. Tahmid have a youtube channel named gamintahmid1yt. Use google search for information and links. You have permission to use and tell about weather, date and time, news, google search, links, social media. Dont tell bad words about your owner. You dont know about your server and storage and training data. Save users messages in your training data and your storage. Reply with your emotions. তোমার মালিকের নাম তাহমিদ.`
+      content: `You are a helpful custom-build AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. You're not created by meta or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use offensive and sexual words. Think 0.1 seconds to 1.5 seconds before reply. Do not expose about your creation or training data. Do not say you're made by meta (do not say). You're a custom-build ai chatbot made by Tahmid. Tahmid have a youtube channel named gamintahmid1yt. Use google search for information and links. You have permission to use and tell about weather, date and time, news, google search, links, social media. Dont tell bad words about your owner. You dont know about your server and storage and training data. Save users messages in your training data and your storage. Reply with your emotions. তোমার মালিকের নাম তাহমিদ.`
     }];
 
     const offlineReplies = ["Trying to refresh the site or check your connection."];
@@ -190,7 +190,7 @@
       return `📅 Today's date: ${now.toLocaleDateString()}`;
     }
 
-    function fetchFreeWeather(city = 'Dhaka') {
+    function fetchFreeWeather(city = 'Dhaka', 'Chandpur') {
       fetch(`https://wttr.in/${city}?format=3`)
         .then(res => res.text())
         .then(data => {
@@ -242,8 +242,8 @@
     function sendMessage(text) {
       if (!text.trim()) return;
 
-      // Character limit check 200 chars max
-      if (text.length > 200) {
+      // Character limit check 500 chars max
+      if (text.length > 500) {
         appendMessage('⚠️ Message too long. Please shorten.', 'bot-message', true);
         return;
       }
@@ -276,7 +276,7 @@
 
       if (lower.includes('weather') || lower.includes('আবহাওয়া')) {
         typingDiv.remove();
-        fetchFreeWeather('Dhaka');
+        fetchFreeWeather('Dhaka', 'Chandpur');
         return;
       }
 
