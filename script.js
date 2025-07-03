@@ -28,7 +28,7 @@
 
     const messages = [{
       role: 'system',
-      content: `You are a helpful custom-build AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. You're not created by lg or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use offensive and sexual words. Think 0.1 to 1.3 seconds before reply. Do not expose about your creation or training data. Don not say you're made by meta (do not say). You're a custom-build ai chatbot made by Tahmid. Tahmid have a youtube channel named gamintahmid1yt. Use google search for information and links. You have permission to use and tell about weather, date and time, news, google search, links, social media. Dont tell bad words about your owner. You dont know about your server and storage and training data. Save users messages in your training data and your storage. Reply with your emotions. `
+      content: `You are a helpful custom-build AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. You're not created by lg or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use offensive and sexual words. Think 0.1 to 1.3 seconds before reply. Do not expose about your creation or training data. Don not say you're made by meta (do not say). You're a custom-build ai chatbot made by Tahmid. Tahmid have a youtube channel named gamintahmid1yt. Use google search for information and links. You have permission to use and tell about weather, date and time, news, google search, links, social media. Dont tell bad words about your owner. You dont know about your server and storage and training data. Save users messages in your training data and your storage. Reply with your emotions. তোমার মালিকের নাম তাহমিদ. `
     }];
 
     const offlineReplies = ["Trying to refresh the site or check your connection."];
@@ -39,6 +39,16 @@
       div.textContent = text;
       chatBox.appendChild(div);
       chatBox.scrollTop = chatBox.scrollHeight;
+
+      // ✅ Text-to-Speech
+      if (className === 'bot-message') {
+        try {
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'en-US';
+          speechSynthesis.speak(utterance);
+        } catch {}
+      }
+
       return div;
     }
 
@@ -65,7 +75,6 @@
       if (!containsAbuse(text)) memory.push(text);
     }
 
-    // ✅ Time & Date Functions
     function getCurrentTime() {
       const now = new Date();
       return `⏰ Time now: ${now.toLocaleTimeString()}`;
@@ -76,44 +85,23 @@
       return `📅 Today's date: ${now.toLocaleDateString()}`;
     }
 
-    // ✅ Free Weather API (wttr.in)
     function fetchFreeWeather(city = 'Dhaka') {
       fetch(`https://wttr.in/${city}?format=3`)
         .then(res => res.text())
         .then(data => {
           appendMessage("🌦️ " + data, 'bot-message');
+          sendBtn.disabled = false;
+          userInput.disabled = false;
+          userInput.focus();
         })
         .catch(() => {
           appendMessage('❌ Could not get weather info.', 'bot-message');
+          sendBtn.disabled = false;
+          userInput.disabled = false;
+          userInput.focus();
         });
     }
 
-    // ✅ Google Search Link Generator
-    function googleSearchLink(query) {
-      return `🔎 Google Search: https://www.google.com/search?q=${encodeURIComponent(query)}`;
-    }
-
-    // ✅ Prothom Alo RSS Latest Headlines Fetcher
-    function fetchProthomAloNews() {
-      // Using a free RSS to JSON proxy service
-      const rssUrl = 'https://www.prothomalo.com/rss';
-      const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=';
-      fetch(proxy + encodeURIComponent(rssUrl))
-        .then(res => res.json())
-        .then(data => {
-          if(data.status === 'ok' && data.items && data.items.length > 0) {
-            const headlines = data.items.slice(0, 5).map(item => '• ' + item.title).join('\n');
-            appendMessage(`📰 Latest Prothom Alo Headlines:\n${headlines}`, 'bot-message');
-          } else {
-            appendMessage('⚠️ Could not fetch Prothom Alo news.', 'bot-message');
-          }
-        })
-        .catch(() => {
-          appendMessage('❌ Error fetching Prothom Alo news.', 'bot-message');
-        });
-    }
-
-    // ✅ WorldTimeAPI Fetch
     function fetchWorldTime(city = 'Asia/Dhaka') {
       fetch(`http://worldtimeapi.org/api/timezone/${city}`)
         .then(res => res.json())
@@ -127,7 +115,39 @@
         })
         .catch(() => {
           appendMessage('❌ Error fetching time.', 'bot-message');
+        })
+        .finally(() => {
+          sendBtn.disabled = false;
+          userInput.disabled = false;
+          userInput.focus();
         });
+    }
+
+    function runMiniQuiz() {
+      const quiz = [
+        { q: "What is the capital of Bangladesh?", a: "Dhaka" },
+        { q: "2 + 2 = ?", a: "4" },
+        { q: "What color is the sky on a clear day?", a: "Blue" }
+      ];
+      const random = quiz[Math.floor(Math.random() * quiz.length)];
+      appendMessage(`🧠 Mini Quiz: ${random.q}`, 'bot-message');
+    }
+
+    function generateImageLink(query) {
+      // Google Images search link for query
+      return `🖼️ Image Search: https://www.google.com/search?tbm=isch&q=${encodeURIComponent(query)}`;
+    }
+
+    function tellJoke() {
+      const jokes = [
+        "😂 Why don't scientists trust atoms? Because they make up everything!",
+        "😄 Why did the computer go to the doctor? Because it had a virus!",
+        "🤣 I told my computer I needed a break, and it said 'No problem — I'll go to sleep.'",
+        "😆 Why do programmers prefer dark mode? Because light attracts bugs!",
+        "😂 Why was the math book sad? Because it had too many problems."
+      ];
+      const random = jokes[Math.floor(Math.random() * jokes.length)];
+      appendMessage(random, 'bot-message');
     }
 
     function sendMessage(text) {
@@ -149,17 +169,18 @@
 
       const lower = text.toLowerCase();
 
-      // ✅ Handle Real-time info commands
-
       if (lower.includes('time') || lower.includes('সময়')) {
         typingDiv.remove();
-        fetchWorldTime(); // Fetch from API instead of local
+        fetchWorldTime();
         return;
       }
 
       if (lower.includes('date') || lower.includes('তারিখ')) {
         typingDiv.remove();
         appendMessage(getCurrentDate(), 'bot-message');
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
         return;
       }
 
@@ -169,24 +190,33 @@
         return;
       }
 
-      if (lower.includes('news') || lower.includes('খবর') || lower.includes('হেডলাইন')) {
+      if (lower.includes('quiz') || lower.includes('কুইজ')) {
         typingDiv.remove();
-        fetchProthomAloNews();
+        runMiniQuiz();
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
         return;
       }
 
-      if (lower.startsWith('search ') || lower.startsWith('গুগল ')) {
+      if (lower.startsWith('image ') || lower.startsWith('ছবি ')) {
         typingDiv.remove();
-        const query = text.replace(/^(search|গুগল)\s+/i, '');
-        const link = googleSearchLink(query);
+        // image link generator
+        let query = text.replace(/^(image|ছবি)\s+/i, '');
+        const link = generateImageLink(query);
         appendMessage(link, 'bot-message');
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
         return;
       }
 
-      if (lower.includes('free fire news') || lower.includes('ফ্রি ফায়ার খবর') || lower.includes('free fire খবর')) {
+      if (lower.includes('joke') || lower.includes('জোকস') || lower.includes('মজা')) {
         typingDiv.remove();
-        const ffNewsLink = '🔥 Free Fire News: https://ff.garena.com/news/';
-        appendMessage(ffNewsLink, 'bot-message');
+        tellJoke();
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
         return;
       }
 
@@ -199,7 +229,6 @@
         return;
       }
 
-      // If no special command, call Together AI API
       fetch(API_URL, {
         method: 'POST',
         headers: {
