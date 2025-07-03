@@ -56,7 +56,7 @@ header h1 {
   align-items: center;
 }
 
-/* Buttons */
+/* Menu and Clear Buttons */
 #menu-btn, #clear-btn {
   background: transparent;
   border: 1px solid #888;
@@ -155,6 +155,7 @@ header h1 {
   line-height: 1.4;
   white-space: pre-wrap;
   box-shadow: 0 0 5px #222;
+  position: relative;
 }
 
 .bot-message {
@@ -169,7 +170,7 @@ header h1 {
   align-self: flex-end;
 }
 
-/* Typing indicator */
+/* Typing Indicator */
 .bot-message.typing {
   font-style: italic;
   opacity: 0.6;
@@ -180,6 +181,22 @@ header h1 {
 @keyframes typingFade {
   0%, 100% { opacity: 0.6; }
   50% { opacity: 0.3; }
+}
+
+/* Speak Button */
+.speak-btn {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 8px;
+  vertical-align: middle;
+  transition: color 0.3s ease;
+}
+
+.speak-btn:hover {
+  color: #fff;
 }
 
 /* Input Form */
@@ -283,6 +300,14 @@ body.light-mode #send-btn {
 
 body.light-mode #send-btn:hover:not(:disabled) {
   background: #333;
+}
+
+body.light-mode .speak-btn {
+  color: #444;
+}
+
+body.light-mode .speak-btn:hover {
+  color: #000;
 }
 
 /* Mobile Responsive */
