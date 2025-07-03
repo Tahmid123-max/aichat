@@ -33,22 +33,50 @@
 
     const offlineReplies = ["Trying to refresh the site or check your connection."];
 
+    // Remove any ongoing speech on clear or refresh
+    function stopAllSpeech() {
+      if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+      }
+    }
+
+    // Create a bot message div with TTS button appended
     function appendMessage(text, className) {
       const div = document.createElement('div');
       div.className = className;
-      div.textContent = text;
-      chatBox.appendChild(div);
-      chatBox.scrollTop = chatBox.scrollHeight;
 
-      // ✅ Text-to-Speech
+      // Create span for text content
+      const textSpan = document.createElement('span');
+      textSpan.textContent = text;
+      div.appendChild(textSpan);
+
+      // If bot message, add TTS button
       if (className === 'bot-message') {
-        try {
+        const ttsBtn = document.createElement('button');
+        ttsBtn.textContent = '🔊';
+        ttsBtn.title = 'Play Text-to-Speech';
+        ttsBtn.style.marginLeft = '8px';
+        ttsBtn.style.cursor = 'pointer';
+        ttsBtn.style.border = 'none';
+        ttsBtn.style.background = 'transparent';
+        ttsBtn.style.fontSize = '1.2em';
+        ttsBtn.style.verticalAlign = 'middle';
+        ttsBtn.addEventListener('click', () => {
+          // Stop other speech if any
+          stopAllSpeech();
+
           const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'en-US';
+          // Detect language roughly (if text contains Bangla unicode chars use bn else en)
+          const banglaRegex = /[\u0980-\u09FF]/;
+          utterance.lang = banglaRegex.test(text) ? 'bn-BD' : 'en-US';
+
           speechSynthesis.speak(utterance);
-        } catch {}
+        });
+        div.appendChild(ttsBtn);
       }
 
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
       return div;
     }
 
@@ -201,7 +229,6 @@
 
       if (lower.startsWith('image ') || lower.startsWith('ছবি ')) {
         typingDiv.remove();
-        // image link generator
         let query = text.replace(/^(image|ছবি)\s+/i, '');
         const link = generateImageLink(query);
         appendMessage(link, 'bot-message');
@@ -280,6 +307,7 @@
       messages.splice(1);
       userInput.value = '';
       userInput.focus();
+      stopAllSpeech();  // Stop any TTS when clearing chat
     });
 
     menuBtn.addEventListener('click', () => {
@@ -297,6 +325,9 @@
         blueGlowToggle.textContent = glow ? '🔧 Default Theme' : '💡 Blue Glow';
       });
     }
+
+    // On page reload, stop any speech (precaution)
+    stopAllSpeech();
 
     userInput.focus();
   });
