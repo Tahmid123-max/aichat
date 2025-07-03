@@ -192,7 +192,7 @@
 
     // Fetch weather for both Dhaka and Chandpur
     function fetchFreeWeather() {
-      const cities = ['Dhaka', 'Chandpur'];
+      const cities = ['Dhaka', 'Chandpur', 'Chittagong'];
       sendBtn.disabled = true;
       userInput.disabled = true;
 
@@ -248,8 +248,8 @@
     function sendMessage(text) {
       if (!text.trim()) return;
 
-      // Character limit check 200 chars max
-      if (text.length > 200) {
+      // Character limit check 250 chars max
+      if (text.length > 250) {
         appendMessage('⚠️ Message too long. Please shorten.', 'bot-message', true);
         return;
       }
@@ -280,7 +280,7 @@
         return;
       }
 
-      if (lower.includes('weather') || lower.includes('আবহাওয়া')) {
+      if (lower.includes('weather in', 'weather of', 'the weather') || lower.includes('আবহাওয়া')) {
         typingDiv.remove();
         fetchFreeWeather();
         return;
@@ -406,7 +406,7 @@
     stopAllSpeech();
 
     // Auto greeting on load
-    appendMessage("I'm Ai ChatBot from Bangladesh 🇧🇩 , created by Tahmid. Ask me anything.", 'bot-message', true);
+    appendMessage("Hi! I'm Ai ChatBot from Bangladesh , created by Tahmid. Ask me anything.", 'bot-message', true);
 
     userInput.focus();
   });
