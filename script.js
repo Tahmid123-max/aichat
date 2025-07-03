@@ -190,21 +190,28 @@
       return `📅 Today's date: ${now.toLocaleDateString()}`;
     }
 
-    function fetchFreeWeather(city = 'Dhaka') {
-      fetch(`https://wttr.in/${city}?format=3`)
-        .then(res => res.text())
-        .then(data => {
-          appendMessage("🌦️ " + data, 'bot-message', true);
-          sendBtn.disabled = false;
-          userInput.disabled = false;
-          userInput.focus();
-        })
-        .catch(() => {
-          appendMessage('❌ Could not get weather info.', 'bot-message', true);
-          sendBtn.disabled = false;
-          userInput.disabled = false;
-          userInput.focus();
-        });
+    // Fetch weather for both Dhaka and Chandpur
+    function fetchFreeWeather() {
+      const cities = ['Dhaka', 'Chandpur'];
+      sendBtn.disabled = true;
+      userInput.disabled = true;
+
+      Promise.all(
+        cities.map(city =>
+          fetch(`https://wttr.in/${city}?format=3`)
+            .then(res => res.text())
+            .then(data => `🌦️ Weather in ${city}: ${data}`)
+            .catch(() => `❌ Could not get weather info for ${city}.`)
+        )
+      )
+      .then(results => {
+        results.forEach(msg => appendMessage(msg, 'bot-message', true));
+      })
+      .finally(() => {
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
+      });
     }
 
     function runMiniQuiz() {
@@ -233,7 +240,6 @@
       appendMessage(random, 'bot-message', true);
     }
 
-    // Show daily quote/fact
     function showDailyQuote() {
       const random = quotes[Math.floor(Math.random() * quotes.length)];
       appendMessage(random, 'bot-message', true);
@@ -276,7 +282,7 @@
 
       if (lower.includes('weather') || lower.includes('আবহাওয়া')) {
         typingDiv.remove();
-        fetchFreeWeather('Dhaka');
+        fetchFreeWeather();
         return;
       }
 
