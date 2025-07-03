@@ -45,9 +45,10 @@
     // Auto Reply Suggestions - displayed after bot reply
     const autoReplies = [
       "Tell me a joke",
-      "Show weather",
+      "Show the weather",
       "What's the time?",
-      "Daily quote"
+      "Daily quote",
+      "Who's your owner?"
     ];
 
     function stopAllSpeech() {
