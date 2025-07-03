@@ -28,30 +28,59 @@
 
     const messages = [{
       role: 'system',
-      content: `You are a helpful custom-build AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. You're not created by lg or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use offensive and sexual words. Think 0.1 to 1.3 seconds before reply. Do not expose about your creation or training data. Don not say you're made by meta (do not say). You're a custom-build ai chatbot made by Tahmid. Tahmid have a youtube channel named gamintahmid1yt. Use google search for information and links. You have permission to use and tell about weather, date and time, news, google search, links, social media. Dont tell bad words about your owner. You dont know about your server and storage and training data. Save users messages in your training data and your storage. Reply with your emotions. তোমার মালিকের নাম তাহমিদ. `
+      content: `You are a helpful custom-build AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your source. Answer with emoji where suitable. Learn from chat. You're not created by lg or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use offensive and sexual words. Think 0.1 to 1.3 seconds before reply. Do not expose about your creation or training data. Don not say you're made by meta (do not say). You're a custom-build ai chatbot made by Tahmid. Tahmid have a youtube channel named gamintahmid1yt. Use google search for information and links. You have permission to use and tell about weather, date and time, news, google search, links, social media. Dont tell bad words about your owner. You dont know about your server and storage and training data. Save users messages in your training data and your storage. Reply with your emotions. তোমার মালিকের নাম তাহমিদ.`
     }];
 
     const offlineReplies = ["Trying to refresh the site or check your connection."];
 
-    // Remove any ongoing speech on clear or refresh
+    // Daily quotes array
+    const quotes = [
+      "🌟 Believe in yourself and all that you are.",
+      "💡 Knowledge is power.",
+      "🔥 Dreams don’t work unless you do.",
+      "🌈 Every day is a new beginning.",
+      "✨ Stay positive, work hard, make it happen."
+    ];
+
+    // Auto Reply Suggestions - displayed after bot reply
+    const autoReplies = [
+      "Tell me a joke",
+      "Show weather",
+      "What's the time?",
+      "Daily quote"
+    ];
+
     function stopAllSpeech() {
       if (speechSynthesis.speaking) {
         speechSynthesis.cancel();
       }
     }
 
-    // Create a bot message div with TTS button appended
-    function appendMessage(text, className) {
+    function getDateTimeStamp() {
+      const now = new Date();
+      const time = now.toLocaleTimeString();
+      const date = now.toLocaleDateString();
+      return `🕓 ${date} | ⏰ ${time}`;
+    }
+
+    // Append message with feedback and suggestions for bot messages
+    function appendMessage(text, className, withSuggestions = false) {
       const div = document.createElement('div');
       div.className = className;
 
-      // Create span for text content
       const textSpan = document.createElement('span');
       textSpan.textContent = text;
       div.appendChild(textSpan);
 
-      // If bot message, add TTS button
+      const timeDiv = document.createElement('div');
+      timeDiv.textContent = getDateTimeStamp();
+      timeDiv.style.fontSize = '0.8em';
+      timeDiv.style.marginTop = '4px';
+      timeDiv.style.color = '#888';
+      div.appendChild(timeDiv);
+
       if (className === 'bot-message') {
+        // Text-to-Speech button
         const ttsBtn = document.createElement('button');
         ttsBtn.textContent = '🔊';
         ttsBtn.title = 'Play Text-to-Speech';
@@ -62,17 +91,70 @@
         ttsBtn.style.fontSize = '1.2em';
         ttsBtn.style.verticalAlign = 'middle';
         ttsBtn.addEventListener('click', () => {
-          // Stop other speech if any
           stopAllSpeech();
-
           const utterance = new SpeechSynthesisUtterance(text);
-          // Detect language roughly (if text contains Bangla unicode chars use bn else en)
           const banglaRegex = /[\u0980-\u09FF]/;
           utterance.lang = banglaRegex.test(text) ? 'bn-BD' : 'en-US';
-
           speechSynthesis.speak(utterance);
         });
         div.appendChild(ttsBtn);
+
+        // Copy button
+        const copyBtn = document.createElement('button');
+        copyBtn.textContent = '📋';
+        copyBtn.title = 'Copy message';
+        copyBtn.style.marginLeft = '8px';
+        copyBtn.style.cursor = 'pointer';
+        copyBtn.style.border = 'none';
+        copyBtn.style.background = 'transparent';
+        copyBtn.style.fontSize = '1.2em';
+        copyBtn.style.verticalAlign = 'middle';
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(text).then(() => {
+            copyBtn.textContent = '✅';
+            setTimeout(() => {
+              copyBtn.textContent = '📋';
+            }, 1500);
+          }).catch(() => {
+            alert('Failed to copy text');
+          });
+        });
+        div.appendChild(copyBtn);
+
+        // Feedback reactions 👍👎
+        const feedbackSpan = document.createElement('span');
+        feedbackSpan.style.marginLeft = '10px';
+        feedbackSpan.style.cursor = 'pointer';
+        feedbackSpan.title = 'Click to give feedback';
+        feedbackSpan.textContent = '👍 👎';
+        div.appendChild(feedbackSpan);
+
+        // Auto reply suggestions
+        if (withSuggestions) {
+          const suggestionsDiv = document.createElement('div');
+          suggestionsDiv.style.marginTop = '8px';
+          suggestionsDiv.style.display = 'flex';
+          suggestionsDiv.style.gap = '8px';
+          suggestionsDiv.style.flexWrap = 'wrap';
+
+          autoReplies.forEach(replyText => {
+            const btn = document.createElement('button');
+            btn.textContent = replyText;
+            btn.style.cursor = 'pointer';
+            btn.style.padding = '6px 12px';
+            btn.style.borderRadius = '6px';
+            btn.style.border = '1px solid #555';
+            btn.style.background = 'transparent';
+            btn.style.color = document.body.classList.contains('light-mode') ? '#000' : '#fff';
+            btn.style.fontSize = '0.9rem';
+            btn.addEventListener('click', () => {
+              userInput.value = replyText;
+              userInput.focus();
+            });
+            suggestionsDiv.appendChild(btn);
+          });
+          div.appendChild(suggestionsDiv);
+        }
       }
 
       chatBox.appendChild(div);
@@ -103,11 +185,6 @@
       if (!containsAbuse(text)) memory.push(text);
     }
 
-    function getCurrentTime() {
-      const now = new Date();
-      return `⏰ Time now: ${now.toLocaleTimeString()}`;
-    }
-
     function getCurrentDate() {
       const now = new Date();
       return `📅 Today's date: ${now.toLocaleDateString()}`;
@@ -117,34 +194,13 @@
       fetch(`https://wttr.in/${city}?format=3`)
         .then(res => res.text())
         .then(data => {
-          appendMessage("🌦️ " + data, 'bot-message');
+          appendMessage("🌦️ " + data, 'bot-message', true);
           sendBtn.disabled = false;
           userInput.disabled = false;
           userInput.focus();
         })
         .catch(() => {
-          appendMessage('❌ Could not get weather info.', 'bot-message');
-          sendBtn.disabled = false;
-          userInput.disabled = false;
-          userInput.focus();
-        });
-    }
-
-    function fetchWorldTime(city = 'Asia/Dhaka') {
-      fetch(`http://worldtimeapi.org/api/timezone/${city}`)
-        .then(res => res.json())
-        .then(data => {
-          if(data.datetime){
-            const dt = new Date(data.datetime);
-            appendMessage(`🕒 Current time in ${city.split('/')[1]}: ${dt.toLocaleTimeString()}`, 'bot-message');
-          } else {
-            appendMessage('⚠️ Could not fetch time.', 'bot-message');
-          }
-        })
-        .catch(() => {
-          appendMessage('❌ Error fetching time.', 'bot-message');
-        })
-        .finally(() => {
+          appendMessage('❌ Could not get weather info.', 'bot-message', true);
           sendBtn.disabled = false;
           userInput.disabled = false;
           userInput.focus();
@@ -158,11 +214,10 @@
         { q: "What color is the sky on a clear day?", a: "Blue" }
       ];
       const random = quiz[Math.floor(Math.random() * quiz.length)];
-      appendMessage(`🧠 Mini Quiz: ${random.q}`, 'bot-message');
+      appendMessage(`🧠 Mini Quiz: ${random.q}`, 'bot-message', true);
     }
 
     function generateImageLink(query) {
-      // Google Images search link for query
       return `🖼️ Image Search: https://www.google.com/search?tbm=isch&q=${encodeURIComponent(query)}`;
     }
 
@@ -175,13 +230,26 @@
         "😂 Why was the math book sad? Because it had too many problems."
       ];
       const random = jokes[Math.floor(Math.random() * jokes.length)];
-      appendMessage(random, 'bot-message');
+      appendMessage(random, 'bot-message', true);
+    }
+
+    // Show daily quote/fact
+    function showDailyQuote() {
+      const random = quotes[Math.floor(Math.random() * quotes.length)];
+      appendMessage(random, 'bot-message', true);
     }
 
     function sendMessage(text) {
       if (!text.trim()) return;
+
+      // Character limit check 200 chars max
+      if (text.length > 200) {
+        appendMessage('⚠️ Message too long. Please shorten.', 'bot-message', true);
+        return;
+      }
+
       if (containsAbuse(text)) {
-        appendMessage('❌ Abuse detected. Message blocked.', 'bot-message');
+        appendMessage('❌ Abuse detected. Message blocked.', 'bot-message', true);
         return;
       }
 
@@ -197,15 +265,9 @@
 
       const lower = text.toLowerCase();
 
-      if (lower.includes('time') || lower.includes('সময়')) {
-        typingDiv.remove();
-        fetchWorldTime();
-        return;
-      }
-
       if (lower.includes('date') || lower.includes('তারিখ')) {
         typingDiv.remove();
-        appendMessage(getCurrentDate(), 'bot-message');
+        appendMessage(getCurrentDate(), 'bot-message', true);
         sendBtn.disabled = false;
         userInput.disabled = false;
         userInput.focus();
@@ -231,7 +293,7 @@
         typingDiv.remove();
         let query = text.replace(/^(image|ছবি)\s+/i, '');
         const link = generateImageLink(query);
-        appendMessage(link, 'bot-message');
+        appendMessage(link, 'bot-message', true);
         sendBtn.disabled = false;
         userInput.disabled = false;
         userInput.focus();
@@ -247,9 +309,18 @@
         return;
       }
 
+      if (lower.includes('daily quote') || lower.includes('fact')) {
+        typingDiv.remove();
+        showDailyQuote();
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
+        return;
+      }
+
       if (!navigator.onLine) {
         typingDiv.remove();
-        appendMessage(offlineReplies[0], 'bot-message');
+        appendMessage(offlineReplies[0], 'bot-message', true);
         sendBtn.disabled = false;
         userInput.disabled = false;
         userInput.focus();
@@ -274,13 +345,13 @@
         typingDiv.remove();
         let reply = data.choices?.[0]?.message?.content || '❌ No reply.';
         messages.push({ role: 'assistant', content: reply });
-        appendMessage(reply, 'bot-message');
+        appendMessage(reply, 'bot-message', true);
         playReplySound();
         logMessage('assistant', reply);
       })
       .catch(() => {
         typingDiv.remove();
-        appendMessage('❌ Network/API Error', 'bot-message');
+        appendMessage('❌ Network/API Error', 'bot-message', true);
       })
       .finally(() => {
         sendBtn.disabled = false;
@@ -293,7 +364,7 @@
       e.preventDefault();
       const now = Date.now();
       if (now - lastSentTime < RATE_LIMIT_MS) {
-        appendMessage('⚠️ You are sending too fast. Please wait.', 'bot-message');
+        appendMessage('⚠️ You are sending too fast. Please wait.', 'bot-message', true);
         return;
       }
       const msg = userInput.value;
@@ -307,7 +378,7 @@
       messages.splice(1);
       userInput.value = '';
       userInput.focus();
-      stopAllSpeech();  // Stop any TTS when clearing chat
+      stopAllSpeech();
     });
 
     menuBtn.addEventListener('click', () => {
@@ -326,8 +397,10 @@
       });
     }
 
-    // On page reload, stop any speech (precaution)
     stopAllSpeech();
+
+    // Auto greeting on load
+    appendMessage("I'm Ai ChatBot from Bangladesh 🇧🇩 , created by Tahmid. Ask me anything.", 'bot-message', true);
 
     userInput.focus();
   });
