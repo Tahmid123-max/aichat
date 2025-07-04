@@ -18,7 +18,7 @@
     const RATE_LIMIT_MS = 2400;      
       
     const abusiveWords = [      
-      'sex','porn','sexy','sexual','nude','pussy','bichi','nunu','boob','fuck','fucking',      
+      'sex','porn','sexy','sexual','nude','pussy','bichi','nunu','boob','fuck','fucking', 'sexi', 'shauwa', 'magernati',
       'fack','dick','blowjob','madarchod','khanki','magi','madartek','bokacoda', 'natkirpo', 'mangernati', 'shaua', 'suck', 'gand', 'gandu',      
       'lund','ass','69','boobs','hotgirl','sexygirl','chudiya','chud', 'shibal', 'pom pom', 'besshamagi', 'halarput', 'halarfo', 'halarfhut', 'bosdike'      
     ];      
@@ -271,4 +271,193 @@
       "🤣 Why did the computer go to the doctor? Because it had a virus!",      
       "😜 Why do bees have sticky hair? Because they use honeycombs!",      
       "😄 What do you call fake spaghetti? An impasta!",      
-      "😂 How does a penguin build its house? Igloos it together
+      "😂 How does a penguin build its house? Igloos it together.",
+      "🤣 Why can't your nose be 12 inches long? Because then it would be a foot.",
+      "😆 Why did the golfer bring an extra pair of pants? In case he got a hole in one!",
+      "🤣 What do you call cheese that isn't yours? Nacho cheese!",
+      "😄 How does a scientist freshen her breath? With experi-mints!",
+      "😂 Why do cows wear bells? Because their horns don't work.",
+      "🤣 What did the zero say to the eight? Nice belt!",
+      "😆 Why don’t skeletons fight each other? They don’t have the guts.",
+      "😜 Why did the tomato turn red? Because it saw the salad dressing!",
+      "😂 Why don’t oysters share their pearls? Because they’re shellfish.",
+      "🤣 Why did the coffee file a police report? It got mugged!",
+      "😄 How do you organize a space party? You planet!"
+    ];
+    
+    function tellJoke() {
+      const random = jokes[Math.floor(Math.random() * jokes.length)];
+      appendMessage(random, 'bot-message', true);
+    }
+    
+    function showDailyQuote() {
+      const random = quotes[Math.floor(Math.random() * quotes.length)];
+      appendMessage(random, 'bot-message', true);
+    }
+    
+    function sendMessage(text) {
+      if (!text.trim()) return;
+      
+      // Character limit check 250 chars max
+      if (text.length > 250) {
+        appendMessage('⚠️ Message too long. Please shorten.', 'bot-message', true);
+        return;
+      }
+      
+      if (containsAbuse(text)) {
+        appendMessage('❌ Abuse detected. Message blocked.', 'bot-message', true);
+        return;
+      }
+      
+      appendMessage(text, 'user-message');
+      messages.push({ role: 'user', content: text });
+      learnFromUserInput(text);
+      logMessage('user', text);
+      
+      sendBtn.disabled = true;
+      userInput.disabled = true;
+      
+      const typingDiv = appendMessage('Typing...', 'bot-message typing');
+      
+      const lower = text.toLowerCase();
+      
+      if (lower.includes('date') || lower.includes('তারিখ')) {
+        typingDiv.remove();
+        appendMessage(getCurrentDate(), 'bot-message', true);
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
+        return;
+      }
+      
+      if (lower.includes('weather') || lower.includes('আবহাওয়া')) {
+        typingDiv.remove();
+        fetchFreeWeather();
+        return;
+      }
+      
+      if (lower.includes('quiz') || lower.includes('কুইজ')) {
+        typingDiv.remove();
+        runMiniQuiz();
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
+        return;
+      }
+      
+      if (lower.startsWith('image ') || lower.startsWith('ছবি ')) {
+        typingDiv.remove();
+        let query = text.replace(/^(image|ছবি)\s+/i, '');
+        const link = generateImageLink(query);
+        appendMessage(link, 'bot-message', true);
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
+        return;
+      }
+      
+      if (lower.includes('joke') || lower.includes('জোকস') || lower.includes('মজা')) {
+        typingDiv.remove();
+        tellJoke();
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
+        return;
+      }
+      
+      if (lower.includes('daily quote') || lower.includes('fact')) {
+        typingDiv.remove();
+        showDailyQuote();
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
+        return;
+      }
+      
+      if (!navigator.onLine) {
+        typingDiv.remove();
+        appendMessage(offlineReplies[0], 'bot-message', true);
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
+        return;
+      }
+      
+      fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + API_KEY
+        },
+        body: JSON.stringify({
+          model: TEXT_MODEL,
+          messages,
+          temperature: 0.2,
+          max_tokens: 450
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        typingDiv.remove();
+        let reply = data.choices?.[0]?.message?.content || '❌ No reply.';
+        messages.push({ role: 'assistant', content: reply });
+        appendMessage(reply, 'bot-message', true);
+        playReplySound();
+        logMessage('assistant', reply);
+      })
+      .catch(() => {
+        typingDiv.remove();
+        appendMessage('❌ Network/API Error', 'bot-message', true);
+      })
+      .finally(() => {
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
+      });
+    }
+    
+    inputForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const now = Date.now();
+      if (now - lastSentTime < RATE_LIMIT_MS) {
+        appendMessage('⚠️ You are sending too fast. Please wait.', 'bot-message', true);
+        return;
+      }
+      const msg = userInput.value;
+      userInput.value = '';
+      sendMessage(msg);
+      lastSentTime = now;
+    });
+    
+    clearBtn.addEventListener('click', () => {
+      chatBox.innerHTML = '';
+      messages.splice(1);
+      userInput.value = '';
+      userInput.focus();
+      stopAllSpeech();
+    });
+    
+    menuBtn.addEventListener('click', () => {
+      settingsPanel.classList.toggle('hidden');
+    });
+    
+    themeToggle.addEventListener('click', () => {
+      const light = document.body.classList.toggle('light-mode');
+      themeToggle.textContent = light ? '🌙 Dark Mode' : '☀️ Light Mode';
+    });
+    
+    if (blueGlowToggle) {
+      blueGlowToggle.addEventListener('click', () => {
+        const glow = document.body.classList.toggle('blue-glow');
+        blueGlowToggle.textContent = glow ? '🔧 Default Theme' : '💡 Blue Glow';
+      });
+    }
+    
+    stopAllSpeech();
+    
+    // Auto greeting on load
+    appendMessage("Hi! I'm Ai ChatBot from Bangladesh , created by Tahmid. Ask me anything.", 'bot-message', true);
+    
+    userInput.focus();
+  });      
+})();
