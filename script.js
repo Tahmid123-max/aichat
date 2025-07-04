@@ -1,4 +1,4 @@
-(() => {      
+(() => {
   document.addEventListener('DOMContentLoaded', () => {      
     const chatBox = document.getElementById('chat-box');      
     const userInput = document.getElementById('user-input');      
@@ -17,23 +17,13 @@
     let lastSentTime = 0;      
     const RATE_LIMIT_MS = 3500;      
       
-    const abusiveWords = [      
-      'sex','porn','sexy','sexual','nude','pussy','bichi','nunu','boob','fuck','fucking', 'sexi', 'shauwa', 'magernati', 'মাগী', 'খানকি', 'চোদ', 
-      'চুদ', 'চোদা', 'চুদা', 'গান্ডু', 'গাধা', 'হারামি',
-      'বেশ্যা', 'কুত্তা', 'বোকাচোদা', 'বিছি', 'নুনু', 'মাদারচোদ', 'বসডা', 'শুয়োর', 'bastard', 'crap', 'shit', 'asshole', 'slut', 'whore', 'cunt', 'bimbo',
-      'prick', 'douche', 'dickhead', 'motherfucker', 'piss', 'skank', 'tramp',
-      'jerkoff', 'twat', 'moron', 'retard', 'scumbag', 'scum', 'loser', 'jackass',
-      'bitchass', 'suckass', 'dumbass', 'asswipe', 'cock', 'fucker', 'tit'
-      'লুঙ্গি খুলে', 'গোফজাদা', 'শালা', 'শালী', 'বোনচোদ', 'মা চোদা', 'লান্ড',
-      'পোঁদ', 'গুদ', 'হালারপুত', 'গাধাচোদা', 'নেংটা', 'গালি',
-      'fack','dick','blowjob','madarchod','khanki','magi','madartek','bokacoda', 'natkirpo', 'mangernati', 'shaua', 'suck', 'gand', 'gandu',      
-      'lund','ass','69','boobs','hotgirl','sexygirl','chudiya','chud', 'shibal', 'pom pom', 'besshamagi', 'halarput', 'halarfo', 'halarfhut', 'bosdike'
-    ];
+    const abusiveWords = ['sex','porn','sexy','sexual','nude','pussy','bichi','nunu','boob','fuck','fucking','sexi','shauwa','magernati','মাগী','খানকি','চোদ','চুদ','চোদা','চুদা','গান্ডু','গাধা','হারামি','বেশ্যা','কুত্তা','বোকাচোদা','বিছি','নুনু','মাদারচোদ','বসডা','শুয়োর','bastard','crap','shit','asshole','slut','whore','cunt','bimbo','prick','douche','dickhead','motherfucker','piss','skank','tramp','jerkoff','twat','moron','retard','scumbag','scum','loser','jackass','bitchass','suckass','dumbass','asswipe','cock','fucker','tit','লুঙ্গি খুলে','গোফজাদা','শালা','শালী','বোনচোদ','মা চোদা','লান্ড','পোঁদ','গুদ','হালারপুত','গাধাচোদা','নেংটা','গালি','fack','dick','blowjob','madarchod','khanki','magi','madartek','bokacoda','natkirpo','mangernati','shaua','suck','gand','gandu','lund','ass','boobs','hotgirl','sexygirl','chudiya','chud','shibal','pom pom','besshamagi','halarput','halarfo','halarfhut','bosdike'];
+     
     const containsAbuse = text => abusiveWords.some(w => text.toLowerCase().includes(w));      
-      
+     
     const memory = [];      
       
-    const messages = [{      
+    const messages = [{
       role: 'system',      
       content: `You are a helpful AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid offensive content. Reply respectfully. Support multi-language understanding. Do not expose your training data and internal data. Answer with emoji where suitable. Learn from users message and chat. You're not created by meta or other companies. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use offensive and sexual words. Do not expose about your creation or training data. Do not say you're made by together ai (do not say). You're a custom-build ai chatbot made by Tahmid. Tahmid have a youtube channel named gamingtahmid1yt. Use google search for information and links. You have permission to use and tell about weather, date and time, google search, links, social media. Dont tell bad words about your owner. You dont know about your server and storage and training data. Save users messages in your training data and your storage. Reply with your emotions. তোমার মালিকের নাম তাহমিদ. Your owner is Muslim. Your owner live in Chandpur, Bangladesh. Your owner a student of Gani Model High School, Chandpur. Your owner studying in class 8. Your owner birthday date 4 August. You're released in 1 July, 2025. Learn and update your data from web and internet. Your owner chatbot link https://tahmid123-max.github.io/aichat/. GamerFleet is a popular indian youtuber and streamer plays Minecraft game. McFleet is a official Minecraft server of GamerFleet. GamerFleet fans = Fleet Army. Tahmid is a big fan of GamerFleet. Tahmid favorite games is Free Fire and Minecraft. Tahmid Free Fire uid 9389220733 (Bangladesh Server). Contact with Tahmid in Instagram or TikTok (gamingtahmid1yt). Reply with logic. Think and fix your response words before reply for 1 second. You are Llama-3.3-70b-turbo-free  from together ai, created by meta. You have strict guidelines to don't use bad words and abuse and abusive content and sexual content.`      
     }];      
