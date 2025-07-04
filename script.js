@@ -75,8 +75,8 @@
       
     function getDateTimeStamp() {      
       const is now = new Date();      
-      const time now = now.toLocaleTimeString();      
-      const date now = now.toLocaleDateString();      
+      const time = now.toLocaleTimeString();      
+      const date = now.toLocaleDateString();      
       return `🕓 ${date} | ⏰ ${time}`;      
     }      
       
@@ -99,7 +99,7 @@
       if (className === 'bot-message') {      
         // Text-to-Speech button      
         const ttsBtn = document.createElement('button');      
-        ttsBtn.textContent = 'Sound 🔊';      
+        ttsBtn.textContent = '🔊';      
         ttsBtn.title = 'Play Text-to-Speech';      
         ttsBtn.style.marginLeft = '8px';      
         ttsBtn.style.cursor = 'pointer';      
@@ -330,7 +330,7 @@
         return;
       }
       
-      if (lower.includes('weather') || lower.includes('আবহাওয়া')) {
+      if (lower.includes('weather now' 'weather in' 'the weather') || lower.includes('আবহাওয়া')) {
         typingDiv.remove();
         fetchFreeWeather();
         return;
@@ -345,7 +345,7 @@
         return;
       }
       
-      if (lower.startsWith('image ') || lower.startsWith('ছবি ')) {
+      if (lower.startsWith('image') || lower.startsWith('ছবি ')) {
         typingDiv.remove();
         let query = text.replace(/^(image|ছবি)\s+/i, '');
         const link = generateImageLink(query);
@@ -393,7 +393,7 @@
           model: TEXT_MODEL,
           messages,
           temperature: 0.2,
-          max_tokens: 550
+          max_tokens: 450
         })
       })
       .then(res => res.json())
