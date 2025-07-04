@@ -18,8 +18,12 @@
     const RATE_LIMIT_MS = 3500;      
       
     const abusiveWords = [      
-      'sex','porn','sexy','sexual','nude','pussy','bichi','nunu','boob','fuck','fucking', 'sexi', 'shauwa', 'magernati', 'মাগী', 'খানকি', 'চোদ', 'চুদ', 'চোদা', 'চুদা', 'গান্ডু', 'গাধা', 'হারামি',
-      'বেশ্যা', 'কুত্তা', 'বোকাচোদা', 'বিছি', 'নুনু', 'মাদারচোদ', 'বসডা', 'শুয়োর',
+      'sex','porn','sexy','sexual','nude','pussy','bichi','nunu','boob','fuck','fucking', 'sexi', 'shauwa', 'magernati', 'মাগী', 'খানকি', 'চোদ', 
+      'চুদ', 'চোদা', 'চুদা', 'গান্ডু', 'গাধা', 'হারামি',
+      'বেশ্যা', 'কুত্তা', 'বোকাচোদা', 'বিছি', 'নুনু', 'মাদারচোদ', 'বসডা', 'শুয়োর', 'bastard', 'crap', 'shit', 'asshole', 'slut', 'whore', 'cunt', 'bimbo',
+      'prick', 'douche', 'dickhead', 'motherfucker', 'piss', 'skank', 'tramp',
+      'jerkoff', 'twat', 'moron', 'retard', 'scumbag', 'scum', 'loser', 'jackass',
+      'bitchass', 'suckass', 'dumbass', 'asswipe', 'cock', 'fucker', 'tit'
       'লুঙ্গি খুলে', 'গোফজাদা', 'শালা', 'শালী', 'বোনচোদ', 'মা চোদা', 'লান্ড',
       'পোঁদ', 'গুদ', 'হালারপুত', 'গাধাচোদা', 'নেংটা', 'গালি',
       'fack','dick','blowjob','madarchod','khanki','magi','madartek','bokacoda', 'natkirpo', 'mangernati', 'shaua', 'suck', 'gand', 'gandu',      
