@@ -11,8 +11,8 @@
     const inputForm = document.getElementById('input-form');      
       
     const API_KEY = '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';      
-    const API_URL = 'https://openrouter.ai/api/v1/chat/completions';      
-    const TEXT_MODEL = 'openrouter/cypher-alpha:free';      
+    const API_URL = 'https://togetherai.xyz/api/v1/chat/completions';      
+    const TEXT_MODEL = 'meta-llama/llama-3.3-70b-turbo-free';      
       
     let lastSentTime = 0;      
     const RATE_LIMIT_MS = 3000;      
