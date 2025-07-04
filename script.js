@@ -15,13 +15,16 @@
     const TEXT_MODEL = 'meta-llama/Llama-3.3-70B-Instruct-Turbo-Free';      
       
     let lastSentTime = 0;      
-    const RATE_LIMIT_MS = 3000;      
+    const RATE_LIMIT_MS = 3500;      
       
     const abusiveWords = [      
-      'sex','porn','sexy','sexual','nude','pussy','bichi','nunu','boob','fuck','fucking', 'sexi', 'shauwa', 'magernati',
+      'sex','porn','sexy','sexual','nude','pussy','bichi','nunu','boob','fuck','fucking', 'sexi', 'shauwa', 'magernati', 'মাগী', 'খানকি', 'চোদ', 'চুদ', 'চোদা', 'চুদা', 'গান্ডু', 'গাধা', 'হারামি',
+      'বেশ্যা', 'কুত্তা', 'বোকাচোদা', 'বিছি', 'নুনু', 'মাদারচোদ', 'বসডা', 'শুয়োর',
+      'লুঙ্গি খুলে', 'গোফজাদা', 'শালা', 'শালী', 'বোনচোদ', 'মা চোদা', 'লান্ড',
+      'পোঁদ', 'গুদ', 'হালারপুত', 'গাধাচোদা', 'নেংটা', 'গালি',
       'fack','dick','blowjob','madarchod','khanki','magi','madartek','bokacoda', 'natkirpo', 'mangernati', 'shaua', 'suck', 'gand', 'gandu',      
-      'lund','ass','69','boobs','hotgirl','sexygirl','chudiya','chud', 'shibal', 'pom pom', 'besshamagi', 'halarput', 'halarfo', 'halarfhut', 'bosdike'      
-    ];      
+      'lund','ass','69','boobs','hotgirl','sexygirl','chudiya','chud', 'shibal', 'pom pom', 'besshamagi', 'halarput', 'halarfo', 'halarfhut', 'bosdike'
+    ];
     const containsAbuse = text => abusiveWords.some(w => text.toLowerCase().includes(w));      
       
     const memory = [];      
