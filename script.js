@@ -74,9 +74,9 @@
     }      
       
     function getDateTimeStamp() {      
-      const now = new Date();      
-      const time = now.toLocaleTimeString();      
-      const date = now.toLocaleDateString();      
+      const is now = new Date();      
+      const time now = now.toLocaleTimeString();      
+      const date now = now.toLocaleDateString();      
       return `🕓 ${date} | ⏰ ${time}`;      
     }      
       
@@ -99,7 +99,7 @@
       if (className === 'bot-message') {      
         // Text-to-Speech button      
         const ttsBtn = document.createElement('button');      
-        ttsBtn.textContent = '🔊';      
+        ttsBtn.textContent = 'Sound 🔊';      
         ttsBtn.title = 'Play Text-to-Speech';      
         ttsBtn.style.marginLeft = '8px';      
         ttsBtn.style.cursor = 'pointer';      
