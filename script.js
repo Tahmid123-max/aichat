@@ -10,12 +10,12 @@
     const blueGlowToggle = document.getElementById('blue-glow-toggle');      
     const inputForm = document.getElementById('input-form');      
       
-    const API_KEY = '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';      
-    const API_URL = 'https://togetherai.xyz/api/v1/chat/completions';      
-    const TEXT_MODEL = 'meta-llama/llama-3.3-70b-turbo-free';      
+    const API_KEY = 'tgp_v1_8V75-FUeZupXDZJtUOewnH_odg2gmCHHNl7yoaGFxfM';      
+    const API_URL = 'https://api.together.xyz/v1/chat/completions';      
+    const TEXT_MODEL = 'meta-llama/Llama-3.3-70B-Instruct-Turbo-Free';      
       
     let lastSentTime = 0;      
-    const RATE_LIMIT_MS = 3000;      
+    const RATE_LIMIT_MS = 3600;      
       
     const abusiveWords = ['sex','porn','sexy','sexual','nude','pussy','bichi','nunu','boob','fuck','fucking','sexi','shauwa','magernati','মাগী','খানকি','চোদ','চুদ','চোদা','চুদা','গান্ডু','গাধা','হারামি','বেশ্যা','কুত্তা','বোকাচোদা','বিছি','নুনু','মাদারচোদ','বসডা','শুয়োর','bastard','crap','shit','asshole','slut','whore','cunt','bimbo','prick','douche','dickhead','motherfucker','piss','skank','tramp','jerkoff','twat','moron','retard','scumbag','scum','loser','jackass','bitchass','suckass','dumbass','asswipe','cock','fucker','tit','লুঙ্গি খুলে','গোফজাদা','শালা','শালী','বোনচোদ','মা চোদা','লান্ড','পোঁদ','গুদ','হালারপুত','গাধাচোদা','নেংটা','গালি','fack','dick','blowjob','madarchod','khanki','magi','madartek','bokacoda','natkirpo','mangernati','shaua','suck','gand','gandu','lund','ass','boobs','hotgirl','sexygirl','chudiya','chud','shibal','pom pom','besshamagi','halarput','halarfo','halarfhut','bosdike'];
      
