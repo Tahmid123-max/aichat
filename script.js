@@ -46,7 +46,7 @@ async function checkLimit() {
   const count = parseInt(localStorage.getItem(limitKey) || '0');
   const isWhitelisted = whitelist.includes(ip);
   if (count >= dailyLimit && !isWhitelisted) {
-    appendMessage(`❌ You reached your daily (20 reply) limit. Wait until next day or Contact owner in WhatsApp 01963178893 (only message) for premium membership.`, 'bot-message', true);
+    appendMessage(`❌ You reached your daily (20 reply) limit. Wait until next day or Contact owner in WhatsApp 01963178893 for premium membership (message only) .`, 'bot-message', true);
     return false;
   }
   localStorage.setItem(limitKey, (count + 1).toString());
