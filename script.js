@@ -14,7 +14,7 @@ const memory = [];
 const whitelist = ['1'];
 const limitKey = 'reply_limit';
 const dateKey = 'limit_date';
-const dailyLimit = 2;
+const dailyLimit = 25;
 
 const messages = [
   {
@@ -46,7 +46,7 @@ async function checkLimit() {
   const count = parseInt(localStorage.getItem(limitKey) || '0');
   const isWhitelisted = whitelist.includes(ip);
   if (count >= dailyLimit && !isWhitelisted) {
-    appendMessage(`❌ You reached your daily (50 reply) limit. Contact owner in WhatsApp 01829865733 (only message) for premium membership.`, 'bot-message', true);
+    appendMessage(`❌ You reached your daily (25 reply) limit. Contact owner in WhatsApp 01829865733 (only message) for premium membership.`, 'bot-message', true);
     return false;
   }
   localStorage.setItem(limitKey, (count + 1).toString());
