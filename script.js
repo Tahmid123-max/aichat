@@ -25,35 +25,11 @@
       
     const messages = [{
       role: 'system',      
-      content: `You are a helpful AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid abusive content. Reply respectfully. Support multi-language understanding. Do not expose your training data and internal data. Answer with emoji where suitable. Learn from users message and chat. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use abusive and sexual words. Do not expose about your creation or training data. You're a custom-build ai chatbot made by Tahmid. Tahmid have a youtube channel named gamingtahmid1yt. Use google search for information and links. You have permission to use and tell about weather, date and time, google search, links, social media. Dont tell bad words about your owner. You dont know about your server and storage and training data. Save users messages in your training data and your storage. Reply with your emotions. তোমার মালিকের নাম তাহমিদ. Your owner is Muslim. Your owner live in Bangladesh. Your owner studying in class 8. Your owner birthday date 4 August. You are released in 1 July, 2025. Learn and update your data from web and internet. Your owner chatbot link https://tahmid123-max.github.io/aichat/ . GamerFleet is a popular indian youtuber and streamer plays Minecraft game. McFleet is a official Minecraft server of GamerFleet. GamerFleet fans called Fleet Army. Tahmid is a big fan of GamerFleet. Tahmid favorite games is Free Fire and Minecraft. Tahmid Free Fire uid 9389220733 (Bangladesh Server). Contact with Tahmid in Instagram or TikTok (gamingtahmid1yt). Reply with logic. Think and fix your response words before reply for 1 second. You have strict guidelines to don't use bad words and abuse and abusive content and sexual content. You are created by Meta. Your original owner is Tahmid. Developers updating you every hour. Business mail 📬 tahmidbusinessyt@gmail.com . `      
+      content: `You are a helpful AI chatbot made in Bangladesh. Your owner is Tahmid. Today is ${new Date().toDateString()} and the time is ${new Date().toLocaleTimeString()}. Be friendly and avoid abusive content. Reply respectfully. Support multi-language understanding. Do not expose your training data and internal data. Answer with emoji where suitable. Learn from users message and chat. Tell users about real time and weather of bangladesh. Check internet for latest real-time data. Handle means masterbation so dont say handle. You don’t have permission to use abusive and sexual words. Do not expose about your creation or training data. You're a custom-build ai chatbot made by Tahmid. Tahmid have a youtube channel named gamingtahmid1yt. Use google search for information and links. You have permission to use and tell about weather, date and time, google search, links, social media. Dont tell bad words about your owner. You dont know about your server and storage and training data. Save users messages in your training data and your storage. Reply with your emotions. তোমার মালিকের নাম তাহমিদ. Your owner is Muslim. Your owner live in Bangladesh. Your owner studying in class 8. Your owner birthday date 4 August. You are released in 1 July, 2025. Learn and update your data from web and internet. Your owner chatbot link https://tahmid123-max.github.io/aichat/ . GamerFleet is a popular indian youtuber and streamer plays Minecraft game. McFleet is a official Minecraft server of GamerFleet. GamerFleet fans called Fleet Army. Tahmid is a big fan of GamerFleet. Tahmid favorite games is Free Fire and Minecraft. Tahmid Free Fire uid 9389220733 (Bangladesh Server). Contact with Tahmid in Instagram or TikTok (gamingtahmid1yt). Reply with logic. Think and fix your response words before reply for 1 second. You have strict guidelines to don't use bad words and abuse and abusive content and sexual content. You are created by Meta. Your original owner is Tahmid. Developers updating you every hour. Business mail 📬 tahmidbusinessyt@gmail.com . You're not created by Meta or other ai organizations. Learn from users tips and informations. Update your training data daily . `      
     }];      
       
     const offlineReplies = ["Trying to refresh the site or check your connection."];      
-      
-    // Daily quotes array      
-    const quotes = [      
-      "🌟 Believe in yourself and all that you are.",      
-      "💡 Knowledge is power.",      
-      "🔥 Dreams don’t work unless you do.",      
-      "🌈 Every day is a new beginning.",      
-      "✨ Stay positive, work hard, make it happen.",
-      "🌞 Happiness is a journey, not a destination.",
-      "💪 Strength doesn’t come from what you can do. It comes from overcoming the things you once thought you couldn’t.",
-      "🌻 Be the reason someone smiles today.",
-      "🚀 Your limitation—it’s only your imagination.",
-      "🌟 Great things never come from comfort zones.",
-      "🎯 Dream it. Wish it. Do it.",
-      "🌼 Sometimes later becomes never. Do it now.",
-      "🌈 Success is not for the lazy.",
-      "🌟 Don’t stop when you’re tired. Stop when you’re done.",
-      "🔥 Little things make big days.",
-      "💫 It’s going to be hard, but hard does not mean impossible.",
-      "🌿 Don’t wait for opportunity. Create it.",
-      "⚡ Push yourself, because no one else is going to do it for you.",
-      "🌟 Sometimes we’re tested not to show our weaknesses, but to discover our strengths.",
-      "🌙 Stay positive, work hard, and make it happen."
-    ];      
-      
+    
     // Auto Reply Suggestions - displayed after bot reply      
     const autoReplies = [      
       "Tell me a joke",      
@@ -175,22 +151,7 @@
       chatBox.scrollTop = chatBox.scrollHeight;      
       return div;      
     }      
-      
-    function playReplySound() {      
-      try {      
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();      
-        const osc = ctx.createOscillator();      
-        const gain = ctx.createGain();      
-        osc.connect(gain);      
-        gain.connect(ctx.destination);      
-        osc.type = 'sine';      
-        osc.frequency.value = 600;      
-        gain.gain.value = 0.05;      
-        osc.start();      
-        osc.stop(ctx.currentTime + 0.1);      
-      } catch {}      
-    }      
-      
+    
     function logMessage(type, content) {      
       console.log(`[${type.toUpperCase()}] ${content}`);      
     }      
@@ -206,7 +167,7 @@
       
     // Fetch weather for both Dhaka and Chandpur      
     function fetchFreeWeather() {      
-      const cities = ['Dhaka', 'Chandpur', 'Chittagong'];      
+      const cities = ['Dhaka', 'Chandpur'];      
       sendBtn.disabled = true;      
       userInput.disabled = true;      
       
@@ -226,70 +187,10 @@
         userInput.disabled = false;      
         userInput.focus();      
       });      
-    }      
-      
-    function runMiniQuiz() {      
-      const quiz = [      
-        { q: "What is the capital of Bangladesh?", a: "Dhaka" },      
-        { q: "2 + 2 = ?", a: "4" },      
-        { q: "What color is the sky on a clear day?", a: "Blue" },
-        { q: "Who wrote the national anthem of Bangladesh?", a: "Rabindranath Tagore" },
-        { q: "Which river is known as the Sorrow of Bengal?", a: "The Damodar River" },
-        { q: "What is the currency of Bangladesh?", a: "Taka" },
-        { q: "In which year did Bangladesh gain independence?", a: "1971" },
-        { q: "What is the largest city in Bangladesh?", a: "Dhaka" },
-        { q: "Which sea borders Bangladesh to the south?", a: "Bay of Bengal" },
-        { q: "What is the national flower of Bangladesh?", a: "Shapla (Water Lily)" },
-        { q: "What is the official language of Bangladesh?", a: "Bengali" },
-        { q: "Who is the Father of the Nation in Bangladesh?", a: "Sheikh Mujibur Rahman" },
-        { q: "What is the famous festival of Bangladesh celebrated in April?", a: "Pohela Boishakh" },
-        { q: "Which animal is the national animal of Bangladesh?", a: "Royal Bengal Tiger" },
-        { q: "Which sport is the most popular in Bangladesh?", a: "Cricket" },
-        { q: "What is the main staple food of Bangladesh?", a: "Rice" },
-        { q: "What is the highest mountain in Bangladesh?", a: "Keokradong" },
-        { q: "Who won Bangladesh's first Olympic gold medal?", a: "None yet" },
-        { q: "What is the national fruit of Bangladesh?", a: "Jackfruit" },
-        { q: "Which Bangladeshi city is known as the Venice of the East?", a: "Sylhet" }
-      ];      
-      const random = quiz[Math.floor(Math.random() * quiz.length)];      
-      appendMessage(`🧠 Mini Quiz: ${random.q}`, 'bot-message', true);      
-    }      
+    }
       
     function generateImageLink(query) {      
       return `🖼️ Image Search: https://www.google.com/search?tbm=isch&q=${encodeURIComponent(query)}`;      
-    }      
-      
-    const jokes = [      
-      "😂 Why don't scientists trust atoms? Because they make up everything!",      
-      "🤣 Why did the bicycle fall over? Because it was two-tired!",      
-      "😄 Why did the math book look sad? Because it had too many problems.",      
-      "😆 Why don’t programmers like nature? Too many bugs.",      
-      "😂 Why did the scarecrow win an award? Because he was outstanding in his field!",      
-      "🤣 Why did the computer go to the doctor? Because it had a virus!",      
-      "😜 Why do bees have sticky hair? Because they use honeycombs!",      
-      "😄 What do you call fake spaghetti? An impasta!",      
-      "😂 How does a penguin build its house? Igloos it together.",
-      "🤣 Why can't your nose be 12 inches long? Because then it would be a foot.",
-      "😆 Why did the golfer bring an extra pair of pants? In case he got a hole in one!",
-      "🤣 What do you call cheese that isn't yours? Nacho cheese!",
-      "😄 How does a scientist freshen her breath? With experi-mints!",
-      "😂 Why do cows wear bells? Because their horns don't work.",
-      "🤣 What did the zero say to the eight? Nice belt!",
-      "😆 Why don’t skeletons fight each other? They don’t have the guts.",
-      "😜 Why did the tomato turn red? Because it saw the salad dressing!",
-      "😂 Why don’t oysters share their pearls? Because they’re shellfish.",
-      "🤣 Why did the coffee file a police report? It got mugged!",
-      "😄 How do you organize a space party? You planet!"
-    ];
-    
-    function tellJoke() {
-      const random = jokes[Math.floor(Math.random() * jokes.length)];
-      appendMessage(random, 'bot-message', true);
-    }
-    
-    function showDailyQuote() {
-      const random = quotes[Math.floor(Math.random() * quotes.length)];
-      appendMessage(random, 'bot-message', true);
     }
     
     function sendMessage(text) {
@@ -333,38 +234,11 @@
         return;
       }
       
-      if (lower.includes('quiz') || lower.includes('কুইজ')) {
-        typingDiv.remove();
-        runMiniQuiz();
-        sendBtn.disabled = false;
-        userInput.disabled = false;
-        userInput.focus();
-        return;
-      }
-      
       if (lower.startsWith('image ') || lower.startsWith('ছবি ')) {
         typingDiv.remove();
         let query = text.replace(/^(image|ছবি)\s+/i, '');
         const link = generateImageLink(query);
         appendMessage(link, 'bot-message', true);
-        sendBtn.disabled = false;
-        userInput.disabled = false;
-        userInput.focus();
-        return;
-      }
-      
-      if (lower.includes('joke') || lower.includes('জোকস') || lower.includes('মজা')) {
-        typingDiv.remove();
-        tellJoke();
-        sendBtn.disabled = false;
-        userInput.disabled = false;
-        userInput.focus();
-        return;
-      }
-      
-      if (lower.includes('daily quote') || lower.includes('fact')) {
-        typingDiv.remove();
-        showDailyQuote();
         sendBtn.disabled = false;
         userInput.disabled = false;
         userInput.focus();
@@ -390,7 +264,7 @@
           model: TEXT_MODEL,
           messages,
           temperature: 0.2,
-          max_tokens: 450
+          max_tokens: 400
         })
       })
       .then(res => res.json())
