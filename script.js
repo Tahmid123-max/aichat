@@ -101,7 +101,10 @@ async function sendMessage(text) {
   // API call
   fetch(API_URL, {
     method:'POST', headers:{ 'Content-Type':'application/json', Authorization:'Bearer '+API_KEY },
-    body:JSON.stringify({ model: TEXT_MODEL, messages, temperature: 0.2, max_tokens: 250 })
+    body:JSON.stringify({
+      model: TEXT_MODEL, messages,
+      temperature: 0.2,
+      max_tokens: 300 })
   })
   .then(res=>res.json()).then(data=>{
     typingDiv.remove();
