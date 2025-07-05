@@ -5,16 +5,16 @@ const API_URL = 'https://api.together.xyz/v1/chat/completions';
 const TEXT_MODEL = 'meta-llama/Llama-3.3-70B-Instruct-Turbo-Free';
 
 let lastSentTime = 0;
-const RATE_LIMIT_MS = 3600;
+const RATE_LIMIT_MS = 4000;
 
-const abusiveWords = [/* same list */];
+const abusiveWords = ['sex','porn','sexy','sexual','nude','pussy','bichi','nunu','boob','fuck','fucking','sexi','shauwa','magernati','মাগী','খানকি','চোদ','চুদ','চোদা','চুদা','গান্ডু','গাধা','হারামি','বেশ্যা','কুত্তা','বোকাচোদা','বিছি','নুনু','মাদারচোদ','বসডা','শুয়োর','bastard','crap','shit','asshole','slut','whore','cunt','bimbo','prick','douche','dickhead','motherfucker','piss','skank','tramp','jerkoff','twat','moron','retard','scumbag','scum','loser','jackass','bitchass','suckass','dumbass','asswipe','cock','fucker','tit','লুঙ্গি খুলে','গোফজাদা','শালা','শালী','বোনচোদ','মা চোদা','লান্ড','পোঁদ','গুদ','হালারপুত','গাধাচোদা','নেংটা','গালি','fack','dick','blowjob','madarchod','khanki','magi','madartek','bokacoda','natkirpo','mangernati','shaua','suck','gand','gandu','lund','ass','boobs','hotgirl','sexygirl','chudiya','chud','shibal','pom pom','besshamagi','halarput','halarfo','halarfhut','bosdike' ];
 const containsAbuse = text => abusiveWords.some(w => text.toLowerCase().includes(w));
 
 const memory = [];
 const whitelist = ['1'];
 const limitKey = 'reply_limit';
 const dateKey = 'limit_date';
-const dailyLimit = 50;
+const dailyLimit = 2;
 
 const messages = [
   {
