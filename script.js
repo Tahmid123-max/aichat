@@ -11,7 +11,7 @@ const abusiveWords = ['sex','porn','sexy','sexual','nude','pussy','bichi','nunu'
 const containsAbuse = text => abusiveWords.some(w => text.toLowerCase().includes(w));
 
 const memory = [];
-const whitelist = [''];
+const whitelist = ['103.145.210.174'];
 const limitKey = 'reply_limit';
 const dateKey = 'limit_date';
 const dailyLimit = 30;
