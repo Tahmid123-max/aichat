@@ -20,11 +20,20 @@
     const abusiveWords = ['sex','porn','sexy','sexual','nude','pussy','bichi','nunu','boob','fuck','fucking','sexi','shauwa','magernati','মাগী','খানকি','চোদ','চুদ','চোদা','চুদা','গান্ডু','গাধা','হারামি','বেশ্যা','কুত্তা','বোকাচোদা','বিছি','নুনু','মাদারচোদ','বসডা','শুয়োর','bastard','crap','shit','asshole','slut','whore','cunt','bimbo','prick','douche','dickhead','motherfucker','piss','skank','tramp','jerkoff','twat','moron','retard','scumbag','scum','loser','jackass','bitchass','suckass','dumbass','asswipe','cock','fucker','tit','লুঙ্গি খুলে','গোফজাদা','শালা','শালী','বোনচোদ','মা চোদা','লান্ড','পোঁদ','গুদ','হালারপুত','গাধাচোদা','নেংটা','গালি','fack','dick','blowjob','madarchod','khanki','magi','madartek','bokacoda','natkirpo','mangernati','shaua','suck','gand','gandu','lund','ass','boobs','hotgirl','sexygirl','chudiya','chud','shibal','pom pom','besshamagi','halarput','halarfo','halarfhut','bosdike'];
     const containsAbuse = text => abusiveWords.some(w => text.toLowerCase().includes(w));
 
-    const whitelist = ['103.145.210.174'];
     const limitKey = 'reply_limit';
     const dateKey = 'limit_date';
     const dailyLimit = 30;
 
+    const premiumUsers = ['103.145.210.174']; // Add more IPs here
+let isPremiumUser = false;
+
+async function checkPremium() {
+  const ip = await getUserIP();
+  isPremiumUser = premiumUsers.includes(ip);
+}
+
+    checkPremium () :
+    
     const messages = [
       {
         role: 'system',
